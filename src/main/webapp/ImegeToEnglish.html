@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image To English</title>
+    <style>
+        h1 {
+            text-align: center;
+            border: 3px solid #EBEEF5;
+            width: 300px;
+            margin:0 auto;
+        }
+
+        .el-main {
+            background-color: #F2F6FC;
+            color: #333;
+            text-align: center;
+            line-height: 20px;
+            border: 3px solid #409EFF;
+            width: 520px;
+            margin:0 auto;
+            border-radius: 30px;
+        }
+        .el-image {
+            border: 3px solid #606266;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>欢迎来到关键词提取</h1><br><br><br>
+
+
+
+<div id="app" >
+    <el-container>
+        <el-main>
+            <form action="http://localhost:8080/brand-case/brand/dopost" method="POST" enctype="multipart/form-data">
+                <input type="file" name="MyImage"><br><br><br>
+                <input type="submit" value="生成图片">
+            </form><br><br>
+            <el-image
+                    style="width: 200px; height: 200px"
+                    :src="url"
+                    :preview-src-list="srcList">
+            </el-image>
+        </el-main>
+    </el-container>
+
+</div>
+
+
+<p>
+    <a href="Center.html">返回上一页</a>
+</p>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script src="js/axios-0.18.0.js"></script>
+
+
+<script>
+    new Vue({
+        el: "#app",
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>English To Image</title>
+    <style>
+        h1{
+            text-align: center;
+            border: 3px solid #EBEEF5;
+            width: 250px;
+            margin:0 auto;
+        }
+
+        .el-main {
+            background-color: #F2F6FC;
+            color: #333;
+            text-align: center;
+            line-height: 20px;
+            border: 3px solid #409EFF;
+            width: 520px;
+            margin:0 auto;
+            border-radius: 30px;
+        }
+
+        .el-image {
+            border: 3px solid #606266;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>欢迎来到AI作图</h1>
+<br><br>
+
+<p>
+<div id="app">
+    <div style="margin: 20px 0;"></div>
+    <el-container>
+        <el-main>
+            <el-input
+                    type="textarea"
+                    placeholder="请输入英文"
+                    v-model="textarea"
+                    maxlength="75"
+                    :autosize="{ minRows: 2, maxRows: 4}"
+                    style="width: 520px"
+                    show-word-limit
+            >
+            </el-input>
+
+            <br><br><br>
+
+            <el-row>
+                <el-button type="primary" size="medium" round>生成图片</el-button>
+            </el-row>
+
+            <br><br>
+
+            <el-image
+                    style="width: 200px; height: 200px"
+                    :src="url"
+                    :preview-src-list="srcList">
+            </el-image>
+        </el-main>
+    </el-container>
+
+
+
+</div>
+</p>
+
+<br><br>
+<p>
+    <a href="Center.html">返回上一页</a>
+</p>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script src="js/axios-0.18.0.js"></script>
+
+
+<script>
+    new Vue({
+        el: "#app",
+        mounted(){
+            this.translate();
+        },
+        methods: {
+            translate() {
+                axios({
+                    method: "get",
+                    url: "http://localhost:8080/brand-case/brand/trans?chinese=" + this.textarea,
+                }).then(resp => {
+                    this.textarea1=resp.data
+                    console.log(resp.data)
+                })
+            },
+        },
+        data() {
+            return {
+                textarea: '',
+                textarea1:'',
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

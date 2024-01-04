@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Center</title>
+    <style>
+        body{
+            background-image: url(./image/1.jpg);
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size: 100% 100%;
+        }
+        p{
+            border: 3px solid #E4E7ED;
+            width: 100px;
+            margin:0 auto;
+            border-radius: 30px;
+            
+        }
+        .el-header, .el-footer {
+            background-color: #909399;
+            color: #333;
+            text-align: center;
+            line-height: 40px;
+            border: 3px solid #409EFF;
+            width: 520px;
+            margin:0 auto;
+            border-radius: 30px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .el-aside {
+            background-color: #F2F6FC;
+            color: #333;
+            text-align: center;
+            line-height: 20px;
+            border: 3px solid #409EFF;
+            width: 520px;
+            margin:0 auto;
+            border-radius: 30px;
+        }
+
+        .el-main {
+            background-color: #F2F6FC;
+            color: #333;
+            text-align: center;
+            line-height: 20px;
+            border: 3px solid #409EFF;
+            width: 520px;
+            margin:0 auto;
+            border-radius: 30px;
+        }
+
+        body > .el-container {
+            margin-bottom: 40px;
+        }
+
+        .el-container:nth-child(5) .el-aside,
+        .el-container:nth-child(6) .el-aside {
+            line-height: 20px;
+        }
+
+        .el-container:nth-child(7) .el-aside {
+            line-height: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+
+
+<br><br><br><br><br><br>
+<div id="app">
+    <el-container>
+        <el-header>
+            欢迎来到AI作图 请选择你需要的服务
+        </el-header>
+        <br>
+        <el-main>
+                <p><el-link href="EnglishToImege.html" target="_blank"><strong>英文转图片</strong></el-link><br></p><br>
+                <p><el-link href="ChineseToEnglish.html" target="_blank"><strong>中文转英文</strong></el-link><br></p><br>
+                <p><el-link href="ImegeToEnglish.html" target="_blank"><strong>图片转英文</strong></el-link><br></p><br>
+                <p><el-link href="VocalToEnglish.html" target="_blank"><strong>音频转英文</strong></el-link><br></p><br>
+        </el-main>
+    </el-container>
+
+
+</div>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+    new Vue({
+        el: "#app",
+        mounted(){
+            this.translate();
+        },
+        methods: {
+            translate() {
+                axios({
+                    method: "get",
+                    url: "http://localhost:8080/brand-case/brand/trans?chinese=" + this.textarea,
+                }).then(resp => {
+                    this.textarea1=resp.data
+                    console.log(resp.data)
+                })
+            },
+        },
+        data() {
+            return {
+                textarea: '',
+                textarea1:'',
+            }
+        }
+    })
+</script>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

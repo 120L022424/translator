@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image To English</title>
+  <style>
+    h1 {
+      text-align: center;
+      border: 3px solid #EBEEF5;
+      width: 300px;
+      margin:0 auto;
+    }
+
+    .el-main {
+      background-color: #F2F6FC;
+      color: #333;
+      text-align: center;
+      line-height: 20px;
+      border: 3px solid #409EFF;
+      width: 520px;
+      margin:0 auto;
+      border-radius: 30px;
+    }
+  </style>
+
+</head>
+<body>
+
+<h1>欢迎来到关键词提取</h1><br><br><br>
+
+
+
+<div id="app" >
+  <el-container>
+    <el-main>
+
+      <el-upload
+              accept=".jpg,.jpeg,.png,.JPG,.JPEG"
+              action="/index.php/index/upload/uploadimg"
+              list-type="picture-card"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :auto-upload="false"
+              :on-change="upload">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+      <el-button type="primary"  @click="submit">图片上传</el-button>
+      <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="" />
+      </el-dialog>
+
+      <br><br><el-button size="small" type="primary">提取</el-button><br>
+
+      <el-input
+              type="textarea"
+              placeholder="提取结果"
+              v-model="textarea"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              style="width: 520px"
+              show-word-limit
+      >
+      </el-input>
+    </el-main>
+  </el-container>
+
+</div>
+
+
+<p>
+  <a href="Center.html">返回上一页</a>
+</p>
+
+
+<script src="js/vue.js"></script>
+<script src="element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+  export default {
+    data() {
+      return {
+        //fileList: [{name: '2.jpeg', url: 'C:/Users/Ducker/Desktop/富瑞/22.01.20 day1.jpg'}]
+        dialogImageUrl: "",
+        dialogVisible: false,
+        imageUrl: "",
+
+      };
+    },
+    methods: {
+      submit() {
+        this.$apiPost("/api/index.php/index/upload/uploadimg", {
+          imgurl: this.imageUrl,
+        }).then((res) => {
+          console.log(res.data);
+        });
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      //将图片转为Base64格式
+      OadBase64(file) {
+        return new Promise(function (resolve, reject) {
+          let reader = new FileReader();
+          let imgResult = "";
+          reader.readAsDataURL(file);
+          reader.onload = function () {
+            imgResult = reader.result;
+          };
+          reader.onerror = function (error) {
+            reject(error);
+          };
+          reader.onloadend = function () {
+            resolve(imgResult);
+          };
+        });
+      },
+      //最后调用一下
+      upload(file) {
+        this.OadBase64(file.raw).then((res) => {
+          console.log(res);
+          this.imageUrl = res;
+        });
+      },
+    },
+  }
+</script>
+
+<script>
+  export default {
+    data() {
+      return {
+        input: ''
+      }
+    }
+  }
+</script>
+
+<script>
+  new Vue({
+    el: "#app",
+  })
+</script>
+
+</body>
+</html>
